@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket thing1</title>
+</head>
+<body>
+    Client2
+    <button onclick="sendMessage()">Send Message</button>
+</body>
+<script>
+    // create WebSocket connection
+    const socket = new WebSocket('ws://localhost:3000');
+
+    // connection opened
+    socket.addEventListener('open', function(event) {
+        console.log('Connected to WebSocket server');
+    });
+
+    // Listen for message
+    socket.addEventListener('message', function(event) {
+        console.log('Message from server:', event.data);
+    });
+
+    const sendMessage = () => {
+        // Check if the WebSocket is open before sending a message
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send('Hello from client!');
+        } else {
+            console.log('WebSocket is not open. Current state:', socket.readyState);
+        }
+    };
+</script>
+</html>
